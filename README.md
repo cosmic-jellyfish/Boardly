@@ -47,6 +47,11 @@ _dark mode coming soon_
 - Share task lists with whoever
 - Backup your progress before clearing browser data
 
+_You can see how data importing works by downloading the example file_\
+**[⬇️ Download Example Import File](public/dummy-import.json)**
+
+
+
 ## 🚀 Getting Started
 
 You've got two options to get Boardly up and running:
