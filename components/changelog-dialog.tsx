@@ -26,6 +26,13 @@ interface ChangelogEntry {
 }
 
 const changelogData: ChangelogEntry[] = [
+  {
+    version: "1.0.1",
+    date: "2025-07-20",
+    title: "Bug Fixes and Improvements",
+    description: "Fixed a bug where the default tasks were not being created for new users, and improved the onboarding experience.",
+    type: "bugfix",
+  },
     {
       version: "1.0.0",
       date: "2025-07-18",
