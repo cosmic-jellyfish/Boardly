@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Upload, User, Sparkles, ArrowRight, Check } from "lucide-react"
-import { userStore } from "@/lib/local-store"
+import { userStore, taskStore } from "@/lib/local-store"
 import { useToast } from "@/hooks/use-toast"
 import { Download, Upload as UploadIcon } from "lucide-react"
 
@@ -111,6 +111,9 @@ export default function OnboardingPage() {
         avatar,
         avatarType: avatarTypeFinal
       })
+
+      // Create onboarding tasks for new users
+      taskStore.createOnboardingTasks()
 
       // Small delay to show completion state
       await new Promise(resolve => setTimeout(resolve, 500))
