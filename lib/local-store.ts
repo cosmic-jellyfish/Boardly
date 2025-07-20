@@ -9,48 +9,9 @@ const USERS_KEY = "kanban-users"
 const initializeDefaultData = () => {
   if (typeof window === "undefined") return
 
-  // Only create default tasks if user hasn't completed onboarding
-  const hasCompletedOnboarding = localStorage.getItem("kanban-user") !== null
-  
-  // Initialise tasks if not exists and user hasn't completed onboarding
-  if (!localStorage.getItem(TASKS_KEY) && !hasCompletedOnboarding) {
-    const defaultTasks: Task[] = [
-      {
-        id: "1",
-        title: "Welcome to Boardly",
-        name: "Welcome to Boardly",
-        description: "This is your first task. Click to edit or create new tasks!",
-        status: "todo",
-        priority: "Medium",
-        assignees: [],
-        start_date: new Date().toISOString().split('T')[0],
-        end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        archived: false,
-        order: 0,
-        parent_id: null,
-        tags: ["welcome"]
-      },
-      {
-        id: "2",
-        title: "Create your first project",
-        name: "Create your first project",
-        description: "Start by creating a new project to organize your work",
-        status: "in-progress",
-        priority: "High",
-        assignees: [],
-        start_date: new Date().toISOString().split('T')[0],
-        end_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        archived: false,
-        order: 1,
-        parent_id: null,
-        tags: ["project"]
-      }
-    ]
-    localStorage.setItem(TASKS_KEY, JSON.stringify(defaultTasks))
+  // Initialize tasks if not exists (empty array)
+  if (!localStorage.getItem(TASKS_KEY)) {
+    localStorage.setItem(TASKS_KEY, JSON.stringify([]))
   }
 
   // Initialize activity if not exists
@@ -321,7 +282,7 @@ export const taskStore = {
   removeDefaultTasks: (): void => {
     const tasks = taskStore.getAll()
     const filteredTasks = tasks.filter(task => 
-      !task.tags.includes("welcome") && !task.tags.includes("project")
+      !task.tags.includes("welcome") && !task.tags.includes("project") && !task.tags.includes("onboarding")
     )
     setData(TASKS_KEY, filteredTasks)
     
@@ -333,6 +294,78 @@ export const taskStore = {
       changes: JSON.stringify({ action: "removed_default_tasks" }),
       created_at: new Date().toISOString(),
       user_id: "local-user"
+    })
+  },
+
+  createOnboardingTasks: (): void => {
+    const tasks = taskStore.getAll()
+    
+    // Only create onboarding tasks if there are no existing tasks
+    if (tasks.length > 0) return
+    
+    const onboardingTasks: Task[] = [
+      {
+        id: crypto.randomUUID(),
+        title: "Welcome to Boardly! 🎉",
+        name: "Welcome to Boardly! 🎉",
+        description: "This is your first task! Click on it to edit details, change status, or add assignees. You can delete these default tasks by clicking them and selecting delete, or go to your profile settings in the top right and click 'Remove Default Tasks'",
+        status: "todo",
+        priority: "Medium",
+        assignees: [],
+        start_date: new Date().toISOString().split('T')[0],
+        end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        actual_start_date: null,
+        actual_end_date: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        archived: false,
+        order: 0,
+        parent_id: null,
+        tags: ["onboarding"],
+        committed: false,
+        dependencies: ""
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Create your first project",
+        name: "Create your first project",
+        description: "Start by creating a new project to organise your work. You can add tasks, set priorities, and track progress.",
+        status: "in-progress",
+        priority: "High",
+        assignees: [],
+        start_date: new Date().toISOString().split('T')[0],
+        end_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        actual_start_date: new Date().toISOString().split('T')[0],
+        actual_end_date: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        archived: false,
+        order: 1,
+        parent_id: null,
+        tags: ["onboarding", "project"],
+        committed: true,
+        dependencies: ""
+      }
+    ]
+    
+    // Add tasks to storage
+    setData(TASKS_KEY, [...tasks, ...onboardingTasks])
+    
+    // Add activity logs for the new tasks
+    onboardingTasks.forEach(task => {
+      activityStore.create({
+        event_type: "Task Created",
+        task_id: task.id,
+        task_name: task.name || task.title,
+        changes: JSON.stringify({ 
+          name: task.name || task.title,
+          status: task.status,
+          priority: task.priority,
+          description: task.description
+        }),
+        created_at: new Date().toISOString(),
+        user_id: "local-user"
+      })
     })
   }
 }
