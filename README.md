@@ -29,15 +29,11 @@ A clean, intuitive task management app that helps you organise, track, and compl
 - Recent activity logs
 - Progress visualisation
 
-![Activity Overview](photos/activityoverview.png)
-
 ### 📋 **Kanban Board**
 - Visual progress tracking
 - Quick status updates
 - Easy to view and navigate
 - Add tasks easily
-
-![Board Overview](photos/boardoverview.png)
 
 ### 🎨 **Modern Interface**
 - Clean, responsive design
@@ -115,6 +111,16 @@ If you prefer to run it locally or deploy your own instance:
 
 ## 📸 Screenshots
 
+### Activity Overview
+The Activity Overview shows you at a glance Projects that have high priority, upcoming due dates, recent activity and more.
+
+![Activity Overview](photos/activityoverview.png)
+
+### Kanban Board
+The Kanban Board view helps you organise and track tasks. Quickly edit task details, and get a clear visual overview of your project's progress.
+
+![Board Overview](photos/boardoverview.png)
+
 ### Creating Tasks
 Click the "New Task" button to create your first task. Add a title, description, set priorities, and assign due dates.
 
@@ -131,27 +137,7 @@ Click on any task to view and edit detailed information, including descriptions,
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **State Management**: Local storage with custom stores
-
 - **Icons**: Lucide React
-
-## 📁 Project Structure
-
-```
-boardly/
-├── app/                   
-│   ├── board/             # Kanban board view
-│   ├── dashboard/         # Activity overview
-│   ├── completed/         # Completed tasks
-│   ├── settings/          # App settings
-│   └── onboarding/        # First-time setup
-├── components/            
-│   ├── ui/               # shadcn/ui components
-│   ├── kanban-board.tsx  # Main board component
-│   └── task-card.tsx     # Individual task cards on Kanban
-├── lib/                  # Utility functions and stores
-├── types/                # TypeScript type definitions
-└── hooks/                # Custom React hooks
-```
 
 
 ## 🤝 Contributing
