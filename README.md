@@ -1,5 +1,16 @@
 # Boardly - Your Personal Task Management Companion
 
+<div align="center">
+
+### 🚧 **ACTIVE DEVELOPMENT** 🚧
+
+**This project is currently in active development. New features are being added regularly.**
+
+</div>
+
+
+---
+
 A clean, intuitive task management app that helps you organise, track, and complete your tasks with ease. Built with Next.js, TypeScript, and Tailwind CSS.
 
 ![Boardly Homepage](photos/homepage.png)
