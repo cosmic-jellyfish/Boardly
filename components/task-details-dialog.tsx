@@ -861,86 +861,86 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
 
           {/* Sidebar with improved styling */}
           <div className="w-[260px] border-l bg-gray-50 dark:bg-gray-900 overflow-hidden flex flex-col min-h-0">
-            <Tabs defaultValue="activity" className="flex flex-col h-full">
-              <TabsList className="grid grid-cols-1 mx-2 mt-8">
-                <TabsTrigger value="activity" tabIndex={-1}>Activity</TabsTrigger>
-              </TabsList>
+            {/* Static Activity label */}
+            <div className="mx-2 mt-8 mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300 select-none cursor-default">
+              Activity
+            </div>
+            <div className="w-full h-1  bg-blue-500 mb-2" />
+            {/* Activity log content */}
+            <div className="flex-1 overflow-y-auto p-2">
+              <div className="space-y-2">
+                {loading ? (
+                  <div className="flex items-center justify-center p-4">
+                    <div className="animate-spin h-5 w-5 border-2 border-gray-300 dark:border-gray-600 border-t-blue-600 rounded-full" />
+                  </div>
+                ) : activityLogs.length > 0 ? (
+                  activityLogs.map((log) => {
+                    const changes = typeof log.changes === 'string' ? JSON.parse(log.changes) : log.changes;
+                    const changeDescription = formatChangeDescription(log.event_type, changes);
+                    
+                    // Determine icon based on event type
+                    let IconComponent = Clock;
+                    let iconBgColor = "bg-blue-100 dark:bg-blue-900/50";
+                    let iconColor = "text-blue-600 dark:text-blue-400";
+                    
+                    if (log.event_type.includes("Status")) {
+                      IconComponent = Clock;
+                    } else if (log.event_type.includes("Priority")) {
+                      IconComponent = Tag;
+                      iconBgColor = "bg-yellow-100 dark:bg-yellow-900/50";
+                      iconColor = "text-yellow-600 dark:text-yellow-400";
+                    } else if (log.event_type.includes("Date") || log.event_type.includes("due")) {
+                      IconComponent = Calendar;
+                      iconBgColor = "bg-green-100 dark:bg-green-900/50";
+                      iconColor = "text-green-600 dark:text-green-400";
+                    } else if (log.event_type.includes("Archived")) {
+                      IconComponent = Archive;
+                      iconBgColor = "bg-red-100 dark:bg-red-900/50";
+                      iconColor = "text-red-600 dark:text-red-400";
+                    } else if (log.event_type.includes("Assignee")) {
+                      IconComponent = Users;
+                      iconBgColor = "bg-purple-100 dark:bg-purple-900/50";
+                      iconColor = "text-purple-600 dark:text-purple-400";
+                    } else if (log.event_type.includes("Created")) {
+                      IconComponent = CheckCircle;
+                      iconBgColor = "bg-green-100 dark:bg-green-900/50";
+                      iconColor = "text-green-600 dark:text-green-400";
+                    } else if (log.event_type.includes("Deleted")) {
+                      IconComponent = Archive;
+                      iconBgColor = "bg-red-100 dark:bg-red-900/50";
+                      iconColor = "text-red-600 dark:text-red-400";
+                    } else if (log.event_type.includes("Name")) {
+                      IconComponent = Tag;
+                      iconBgColor = "bg-blue-100 dark:bg-blue-900/50";
+                      iconColor = "text-blue-600 dark:text-blue-400";
+                    } else if (log.event_type.includes("Description")) {
+                      IconComponent = Tag;
+                      iconBgColor = "bg-indigo-100 dark:bg-indigo-900/50";
+                      iconColor = "text-indigo-600 dark:text-indigo-400";
+                    }
 
-              {/* Fixed Activity Tab Content */}
-              <TabsContent value="activity" className="flex-1 overflow-y-auto p-2">
-                <div className="space-y-2">
-                  {loading ? (
-                    <div className="flex items-center justify-center p-4">
-                      <div className="animate-spin h-5 w-5 border-2 border-gray-300 dark:border-gray-600 border-t-blue-600 rounded-full" />
-                    </div>
-                  ) : activityLogs.length > 0 ? (
-                    activityLogs.map((log) => {
-                      const changes = typeof log.changes === 'string' ? JSON.parse(log.changes) : log.changes;
-                      const changeDescription = formatChangeDescription(log.event_type, changes);
-                      
-                      // Determine icon based on event type
-                      let IconComponent = Clock;
-                      let iconBgColor = "bg-blue-100 dark:bg-blue-900/50";
-                      let iconColor = "text-blue-600 dark:text-blue-400";
-                      
-                      if (log.event_type.includes("Status")) {
-                        IconComponent = Clock;
-                      } else if (log.event_type.includes("Priority")) {
-                        IconComponent = Tag;
-                        iconBgColor = "bg-yellow-100 dark:bg-yellow-900/50";
-                        iconColor = "text-yellow-600 dark:text-yellow-400";
-                      } else if (log.event_type.includes("Date") || log.event_type.includes("due")) {
-                        IconComponent = Calendar;
-                        iconBgColor = "bg-green-100 dark:bg-green-900/50";
-                        iconColor = "text-green-600 dark:text-green-400";
-                      } else if (log.event_type.includes("Archived")) {
-                        IconComponent = Archive;
-                        iconBgColor = "bg-red-100 dark:bg-red-900/50";
-                        iconColor = "text-red-600 dark:text-red-400";
-                      } else if (log.event_type.includes("Assignee")) {
-                        IconComponent = Users;
-                        iconBgColor = "bg-purple-100 dark:bg-purple-900/50";
-                        iconColor = "text-purple-600 dark:text-purple-400";
-                      } else if (log.event_type.includes("Created")) {
-                        IconComponent = CheckCircle;
-                        iconBgColor = "bg-green-100 dark:bg-green-900/50";
-                        iconColor = "text-green-600 dark:text-green-400";
-                      } else if (log.event_type.includes("Deleted")) {
-                        IconComponent = Archive;
-                        iconBgColor = "bg-red-100 dark:bg-red-900/50";
-                        iconColor = "text-red-600 dark:text-red-400";
-                      } else if (log.event_type.includes("Name")) {
-                        IconComponent = Tag;
-                        iconBgColor = "bg-blue-100 dark:bg-blue-900/50";
-                        iconColor = "text-blue-600 dark:text-blue-400";
-                      } else if (log.event_type.includes("Description")) {
-                        IconComponent = Tag;
-                        iconBgColor = "bg-indigo-100 dark:bg-indigo-900/50";
-                        iconColor = "text-indigo-600 dark:text-indigo-400";
-                      }
-
-                      return (
-                        <div key={log.id} className="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm">
-                          <div className="flex gap-3">
-                            <div className={`h-8 w-8 rounded-full ${iconBgColor} flex items-center justify-center flex-shrink-0`}>
-                              <IconComponent className={`h-4 w-4 ${iconColor}`} />
-                            </div>
-                            <div className="flex-1">
-                              {/* Changed order to: 1. Content 2. Who 3. When */}
-                              <p className="text-sm font-medium">
-                                {changeDescription}
+                    return (
+                      <div key={log.id} className="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm">
+                        <div className="flex gap-3">
+                          <div className={`h-8 w-8 rounded-full ${iconBgColor} flex items-center justify-center flex-shrink-0`}>
+                            <IconComponent className={`h-4 w-4 ${iconColor}`} />
+                          </div>
+                          <div className="flex-1">
+                            {/* Changed order to: 1. Content 2. Who 3. When */}
+                            <p className="text-sm font-medium">
+                              {changeDescription}
+                            </p>
+                            
+                            {log.users && (
+                              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
+                                <span className="font-medium">Updated by {log.users.name || log.users.email}</span>
                               </p>
-                              
-                              {log.users && (
-                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
-                                  <span className="font-medium">Updated by {log.users.name || log.users.email}</span>
-                                </p>
-                              )}
-                              
-                              <p className="text-xs text-gray-400">
-                                {log.created_at ? formatDistanceToNow(new Date(log.created_at), { addSuffix: true }) : ""}
-                              </p>
-                              {/* Added a button to toggle visibility of changes 
+                            )}
+                            
+                            <p className="text-xs text-gray-400">
+                              {log.created_at ? formatDistanceToNow(new Date(log.created_at), { addSuffix: true }) : ""}
+                            </p>
+                            {/* Added a button to toggle visibility of changes - kinda obsolete 
                               <button 
                                 onClick={() => {
                                   const el = document.getElementById(`task-changes-${log.id}`);
@@ -951,23 +951,22 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                                 <span>View details</span>
                                 <ChevronDown className="h-3 w-3 ml-1" />
                               </button> */}
-                              <div id={`task-changes-${log.id}`} className="hidden mt-2">
-                                {renderFormattedChanges(changes)}
-                              </div>
+                            <div id={`task-changes-${log.id}`} className="hidden mt-2">
+                              {renderFormattedChanges(changes)}
                             </div>
                           </div>
                         </div>
-                      );
-                    })
-                  ) : (
-                    <div className="text-center p-6 text-gray-500">
-                      <Clock className="h-10 w-10 mb-2 mx-auto text-gray-400" />
-                      <p className="text-sm">No activity recorded yet</p>
-                    </div>
-                  )}
-                </div>
-              </TabsContent>
-            </Tabs>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-center p-6 text-gray-500">
+                    <Clock className="h-10 w-10 mb-2 mx-auto text-gray-400" />
+                    <p className="text-sm">No activity recorded yet</p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
