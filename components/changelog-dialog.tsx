@@ -34,7 +34,8 @@ const changelogData: ChangelogEntry[] = [
     type: "improvement",
     highlights: [
       "Improved activity log layout and readability",
-      "Allowed clicking on \"Recent Tasks\" on the home dashboard"
+      "Allowed clicking on \"Recent Tasks\" on the home dashboard",
+      "Decided to remove the tags right under the title in the task details dialog for now (tags are still shown within the dialog area)"
     ]
   },
   {
