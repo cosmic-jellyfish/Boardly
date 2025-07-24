@@ -417,12 +417,12 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                 >
                   {task.priority?.charAt(0).toUpperCase() + task.priority?.slice(1).toLowerCase()}
                 </Badge>
-
+                {/* tags right under the title 
                 {task.tags?.map((tag, index) => (
                   <Badge key={index} variant="outline" className="text-xs">
                     {tag}
                   </Badge>
-                ))}
+                ))}*/}
               </div>
             </DialogHeader>
 
