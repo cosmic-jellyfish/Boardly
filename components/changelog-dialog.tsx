@@ -27,6 +27,17 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
   {
+    version: "1.0.2", 
+    date: "2025-07-24",
+    title: "Improvements",
+    description: "Slight adjustments to the task details dialog and home dashboard.",
+    type: "improvement",
+    highlights: [
+      "Improved activity log layout and readability",
+      "Allowed clicking on \"Recent Tasks\" on the home dashboard"
+    ]
+  },
+  {
     version: "1.0.1",
     date: "2025-07-20",
     title: "Bug Fixes and Improvements",
