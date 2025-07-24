@@ -239,7 +239,13 @@ export default function Dashboard() {
               <h2 className="text-xl font-semibold mb-4">Recent Tasks</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recentTasks?.map((task) => (
-                  <TaskCard key={task.id} task={task} showDetails />
+                  <div
+                    key={task.id}
+                    onClick={() => handleTaskClick(task)}
+                    className="cursor-pointer p-0 rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    <TaskCard task={task} showDetails />
+                  </div>
                 ))}
 
                 {(!recentTasks || recentTasks.length === 0) && (
