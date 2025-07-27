@@ -34,11 +34,11 @@ A clean, intuitive task management app that helps you organise, track, and compl
 - Quick status updates
 - Easy to view and navigate
 - Add tasks easily
+- Drag & Drop features
 
 ### 🎨 **Modern Interface**
 - Clean, responsive design
 - Smooth animations and transitions
-- Mobile-friendly layout
 
 _dark mode coming soon_
 
