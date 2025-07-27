@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { format, differenceInDays, isAfter, isBefore, startOfDay } from "date-fns"
-import { Tag,  Users, Link2, Archive } from "lucide-react"
+import { Tag,  Users, Link2, Archive, GripVertical } from "lucide-react"
 import type { Task } from "@/types"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -15,9 +15,10 @@ interface TaskCardProps {
   showDetails?: boolean
   readOnly?: boolean
   onClick?: () => void
+  isDragging?: boolean
 }
 
-export function TaskCard({ task, showDetails = false, readOnly = false, onClick }: TaskCardProps) {
+export function TaskCard({ task, showDetails = false, readOnly = false, onClick, isDragging = false }: TaskCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const user = mockUser
 
@@ -96,10 +97,11 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick 
   return (
     <Card 
       className={cn(
-        "transition-all duration-200 cursor-pointer border-2 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg",
+        "transition-all duration-200 cursor-pointer border-2 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg group",
         isHovered && "border-gray-300 dark:border-gray-600 shadow-xl",
         isOverdue && "border-red-300 dark:border-red-700",
-        readOnly && "opacity-75"
+        readOnly && "opacity-75",
+        isDragging && "opacity-50 scale-95 shadow-2xl"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -107,9 +109,13 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick 
     >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
-          <CardTitle className="text-base font-semibold line-clamp-2 flex-1 pr-2">
-            {task.title || task.name}
-          </CardTitle>
+          <div className="flex items-start gap-2 flex-1 min-w-0">
+            
+            <CardTitle className="text-base font-semibold line-clamp-2 flex-1 pr-2">
+              {task.title || task.name}
+            </CardTitle>
+          </div>
+          
           <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
             {task.archived && (
               <Archive className="h-4 w-4 text-gray-400" />
@@ -179,21 +185,11 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick 
 
         {/* Compact metadata */}
         <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-          {task.assignees && (
-            Array.isArray(task.assignees) ? 
-              task.assignees.length > 0 && (
-                <div className="flex items-center">
-                  <Users className="h-4 w-4 mr-1.5" />
-                  {task.assignees.length}
-                </div>
-              )
-            : 
-              task.assignees && (
-                <div className="flex items-center">
-                  <Users className="h-4 w-4 mr-1.5" />
-                  {task.assignees.split(',').length}
-                </div>
-              )
+          {task.assignees && task.assignees.length > 0 && (
+            <div className="flex items-center">
+              <Users className="h-4 w-4 mr-1.5" />
+              {task.assignees.length}
+            </div>
           )}
 
           {task.tags && task.tags.length > 0 && (
