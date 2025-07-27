@@ -27,6 +27,21 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
   {
+    version: "1.1.0",
+    date: "2025-07-27",
+    title: "Drag & Drop and Smart Sorting",
+    description: "Implemented drag and drop functionality for tasks. Added intelligent sorting based on urgency and due dates..",
+    type: "feature",
+    highlights: [
+      "Drag and drop tasks between columns",
+      "Smart sorting based on task urgency and end dates",
+      "Overdue tasks automatically appear at the top",
+      "Visual indicators while dragging tasks",
+      "Persistent task positions across sessions",
+      "Smooth animations during task reordering"
+    ]
+  },
+  {
     version: "1.0.2", 
     date: "2025-07-24",
     title: "Improvements",
