@@ -29,7 +29,7 @@ const changelogData: ChangelogEntry[] = [
   {
     version: "1.2.0",
     date: "2025-08-23",
-    title: "Calendar View and Task Creation",
+    title: "Calendar View",
     description: "Added a calendar view to the app. This allows you to view your tasks in a calendar format. Also added the ability to create tasks on the calendar view.",
     type: "feature",
     highlights: [
