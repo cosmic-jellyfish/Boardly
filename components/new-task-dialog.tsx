@@ -3,6 +3,7 @@
 import React from "react"
 
 import { useState } from "react"
+import { format } from "date-fns"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -33,7 +34,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
     priority: "medium",
     tags: [],
     status: initialStatus || "todo",
-    assignees: "",
+    assignees: [],
     start_date: null,
     end_date: null,
     actual_start_date: null,
@@ -69,7 +70,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
         priority: "medium",
         tags: [],
         status: initialStatus || "todo",
-        assignees: "",
+        assignees: [],
         start_date: null,
         end_date: null,
         actual_start_date: null,
@@ -83,12 +84,13 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
   }, [open, initialStatus])
 
   const handleAssigneesChange = (value: string) => {
-    setNewTask({ ...newTask, assignees: value })
+    const names = value.split(',').map(name => name.trim()).filter(Boolean)
+    setNewTask({ ...newTask, assignees: names })
   }
 
   const handleAssigneesBlur = () => {
     // Only add complete names when user finishes typing
-    const names = newTask.assignees.split(',').map(name => name.trim()).filter(Boolean)
+    const names = newTask.assignees || []
     names.forEach(name => {
       if (name && !availableUsers.includes(name)) {
         userStore.add(name)
@@ -98,15 +100,11 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
   }
 
   const handleQuickAddUser = (userName: string) => {
-    const currentNames = newTask.assignees.split(',').map(name => name.trim()).filter(Boolean)
+    const currentNames = newTask.assignees || []
     
     // Don't add if already in the list
     if (!currentNames.includes(userName)) {
-      const newAssignees = currentNames.length > 0 
-        ? `${newTask.assignees}, ${userName}`
-        : userName
-      
-      setNewTask({ ...newTask, assignees: newAssignees })
+      setNewTask({ ...newTask, assignees: [...currentNames, userName] })
     }
   }
 
@@ -129,8 +127,8 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
   
       const taskToCreate = {
         ...newTask,
-        // Convert assignees string to array for storage
-        assignees: newTask.assignees ? newTask.assignees.split(',').map(name => name.trim()).filter(Boolean) : [],
+        title: newTask.name || newTask.title || "",
+        assignees: newTask.assignees || [],
         order: order,
         // Set important fields
         user_id: "local-user",
@@ -239,7 +237,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
                 onSelect={(date) =>
                   setNewTask({
                     ...newTask,
-                    start_date: date ? date.toISOString().split("T")[0] : null,
+                    start_date: date ? format(date, "yyyy-MM-dd") : null,
                   })
                 }
               />
@@ -254,7 +252,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
                 onSelect={(date) =>
                   setNewTask({
                     ...newTask,
-                    end_date: date ? date.toISOString().split("T")[0] : null,
+                    end_date: date ? format(date, "yyyy-MM-dd") : null,
                   })
                 }
               />
@@ -267,7 +265,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
             </label>
             <Input
               id="assignees"
-              value={newTask.assignees}
+              value={Array.isArray(newTask.assignees) ? newTask.assignees.join(', ') : ''}
               onChange={(e) => handleAssigneesChange(e.target.value)}
               onBlur={handleAssigneesBlur}
               placeholder="Enter assignee names (comma separated)"
@@ -282,7 +280,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
                     .filter(user => user !== "Local User")
                     .slice(-5) // Show last 5 users for quick add
                     .map((user) => {
-                      const currentNames = newTask.assignees.split(',').map(name => name.trim()).filter(Boolean)
+                      const currentNames = newTask.assignees || []
                       const isAlreadyAdded = currentNames.includes(user)
                       
                       return (
@@ -384,7 +382,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
                         size="sm"
                         className="h-auto p-1"
                         onClick={() => {
-                          const newDeps = newTask.dependencies
+                          const newDeps = (newTask.dependencies || "")
                             .split(",")
                             .map((d) => d.trim())
                             .filter((d) => d !== depId_trimmed)

@@ -483,7 +483,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                             onSelect={(date) =>
                               setEditedTask({
                                 ...editedTask,
-                                start_date: date ? date.toISOString().split("T")[0] : null,
+                                start_date: date ? format(date, "yyyy-MM-dd") : null,
                               })
                             }
                           />
@@ -498,7 +498,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                             onSelect={(date) =>
                               setEditedTask({
                                 ...editedTask,
-                                end_date: date ? date.toISOString().split("T")[0] : null,
+                                end_date: date ? format(date, "yyyy-MM-dd") : null,
                               })
                             }
                           />
@@ -513,7 +513,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                             onSelect={(date) =>
                               setEditedTask({
                                 ...editedTask,
-                                actual_start_date: date ? date.toISOString().split("T")[0] : null,
+                                actual_start_date: date ? format(date, "yyyy-MM-dd") : null,
                               })
                             }
                           />
@@ -530,7 +530,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                             onSelect={(date) =>
                               setEditedTask({
                                 ...editedTask,
-                                start_date: date ? date.toISOString().split("T")[0] : null,
+                                start_date: date ? format(date, "yyyy-MM-dd") : null,
                               })
                             }
                           />
@@ -549,7 +549,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                             onSelect={(date) =>
                               setEditedTask({
                                 ...editedTask,
-                                end_date: date ? date.toISOString().split("T")[0] : null,
+                                end_date: date ? format(date, "yyyy-MM-dd") : null,
                               })
                             }
                           />
@@ -580,7 +580,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                             onSelect={(date) =>
                               setEditedTask({
                                 ...editedTask,
-                                actual_start_date: date ? date.toISOString().split("T")[0] : null,
+                                actual_start_date: date ? format(date, "yyyy-MM-dd") : null,
                               })
                             }
                           />
