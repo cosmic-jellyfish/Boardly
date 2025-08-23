@@ -27,6 +27,17 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
   {
+    version: "1.2.0",
+    date: "2025-08-23",
+    title: "Calendar View and Task Creation",
+    description: "Added a calendar view to the app. This allows you to view your tasks in a calendar format. Also added the ability to create tasks on the calendar view.",
+    type: "feature",
+    highlights: [
+      "Added the ability to create tasks on the calendar view.",
+      "Added the ability to view tasks for a specific date on the calendar view.",
+    ]
+  },
+  {
     version: "1.1.0",
     date: "2025-07-27",
     title: "Drag & Drop and Smart Sorting",
