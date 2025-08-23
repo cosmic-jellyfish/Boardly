@@ -5,6 +5,7 @@
 ### 🚧 **ACTIVE DEVELOPMENT** 🚧
 
 **This project is currently in active development. New features are being added regularly.**
+I lied. I slow.
 
 </div>
 
@@ -66,7 +67,7 @@ You've got two options to get Boardly up and running:
 ### Option 1: Use the Hosted Version (Recommended)
 The easiest way to get started - just visit the live demo and start organising your tasks straight away!
 
-**[🚀 Try Boardly Live Demo](https://boardly-inky.vercel.app/)**
+**[🚀 Boardly Hosted](https://boardly-inky.vercel.app/)**
 
 Your data stays local to your browser, so you get all the privacy benefits without any setup hassle.
 
