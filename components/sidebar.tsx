@@ -46,12 +46,11 @@ export function Sidebar({ className }: { className?: string }) {
             <NavItem href="/dashboard" icon={<Home />} label="Dashboard" expanded={expanded} active={pathname === "/dashboard"} />
             <NavItem href="/board" icon={<LayoutGrid />} label="Kanban Board" expanded={expanded} active={pathname === "/board"} />
             <NavItem
-              href="#"
+              href="/calendar"
               icon={<Calendar />}
               label="Calendar"
               expanded={expanded}
-              disabled
-              comingSoon
+              active={pathname === "/calendar"}
             />
             <NavItem
               href="#"

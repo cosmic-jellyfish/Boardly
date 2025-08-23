@@ -20,10 +20,11 @@ interface NewTaskDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   initialStatus?: string
+  initialDate?: Date
   onTaskCreated?: (task: Task) => void
 }
 
-export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated }: NewTaskDialogProps) {
+export function NewTaskDialog({ open, onOpenChange, initialStatus, initialDate, onTaskCreated }: NewTaskDialogProps) {
   const [loading, setLoading] = useState(false)
   const [allTasks, setAllTasks] = useState<Task[]>([])
   const [availableUsers, setAvailableUsers] = useState<string[]>([])
@@ -36,7 +37,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
     status: initialStatus || "todo",
     assignees: [],
     start_date: null,
-    end_date: null,
+    end_date: initialDate ? format(initialDate, "yyyy-MM-dd") : null,
     actual_start_date: null,
     actual_end_date: null,
     order: 0,
@@ -72,7 +73,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
         status: initialStatus || "todo",
         assignees: [],
         start_date: null,
-        end_date: null,
+        end_date: initialDate ? format(initialDate, "yyyy-MM-dd") : null,
         actual_start_date: null,
         actual_end_date: null,
         order: 0,
@@ -81,7 +82,7 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, onTaskCreated
         dependencies: "",
       })
     }
-  }, [open, initialStatus])
+  }, [open, initialStatus, initialDate])
 
   const handleAssigneesChange = (value: string) => {
     const names = value.split(',').map(name => name.trim()).filter(Boolean)
