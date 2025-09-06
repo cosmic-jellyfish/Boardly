@@ -27,14 +27,26 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
   {
+    version: "1.2.1",
+    date: "2025-09-06", 
+    title: "Dependencies Bug Fix and Improvement",
+    description: "Fixed a bug in the Task Dialog component where it wasn't resetting after closure. Also improved the dependency management interface when editing tasks... Talk about forever having dependencies even when you didn't add them.",
+    type: "bugfix",
+    highlights: [
+      "Fixed dependency display bug",
+      "Allowed adding and removing dependencies in task edit mode (doesn't really count as as a feature tbh)",
+      "Improved validation when adding/removing task dependencies"
+    ]
+  },
+  {
     version: "1.2.0",
     date: "2025-08-23",
     title: "Calendar View",
     description: "Added a calendar view to the app. This allows you to view your tasks in a calendar format. Also added the ability to create tasks on the calendar view.",
     type: "feature",
     highlights: [
-      "Added the ability to create tasks on the calendar view.",
-      "Added the ability to view tasks for a specific date on the calendar view.",
+      "Added the ability to create tasks on the calendar view",
+      "Added the ability to view tasks for a specific date on the calendar view",
     ]
   },
   {
