@@ -49,6 +49,10 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
       if (!task) return
       
       setLoading(true)
+      setDependencyTasks([])
+      setChildTasks([])
+      setActivityLogs([])
+      
       try {
         if (open) {
           const [
@@ -70,13 +74,14 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
           const childTasksList = await taskApi.getChildTasks(task.id)
           setChildTasks(childTasksList)
 
+          // Process dependencies using the fresh tasksData
           if (task.dependencies) {
             const dependencyIds = task.dependencies
               .split(",")
               .map((d) => d.trim())
               .filter(Boolean)
             if (dependencyIds.length > 0) {
-              const dependenciesData = allTasks.filter(t => dependencyIds.includes(t.id))
+              const dependenciesData = tasksData.filter(t => dependencyIds.includes(t.id))
               setDependencyTasks(dependenciesData)
             }
           }
@@ -101,6 +106,10 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
   useEffect(() => {
     if (!open) {
       setIsEditing(false)
+      setDependencyTasks([])
+      setChildTasks([])
+      setActivityLogs([])
+      setAllTasks([])
     }
   }, [open])
 
