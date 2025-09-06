@@ -358,8 +358,9 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
 
   const handleAssigneesBlur = () => {
     // Only add complete names when user finishes typing
-    const names = editedTask.assignees.split(',').map(name => name.trim()).filter(Boolean)
-    names.forEach(name => {
+    const assigneesString = Array.isArray(editedTask.assignees) ? editedTask.assignees.join(', ') : editedTask.assignees || ''
+    const names = assigneesString.split(',').map((name: string) => name.trim()).filter(Boolean)
+    names.forEach((name: string) => {
       if (name && !availableUsers.includes(name)) {
         userStore.add(name)
         setAvailableUsers(prev => [...prev, name])
@@ -451,7 +452,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                     />
                   ) : (
                     <div className="text-sm text-gray-700 dark:text-gray-300 prose dark:prose-invert prose-sm max-w-none">
-                      {isRichText ? (
+                      {isRichText(task.description) ? (
                         <RichTextRenderer content={task.description || ""} />
                       ) : (
                         task.description ? <p>{task.description}</p> : 
@@ -477,7 +478,7 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                         <span>Progress</span>
                         <span>{progress.value}%</span>
                       </div>
-                      <ProgressBar value={progress.value} max={progress.max} showLabel={false} />
+                      <ProgressBar value={progress.value} max={progress.max} />
                     </div>
                   )}
                   
@@ -713,6 +714,70 @@ export function TaskDetailsDialog({ task, open, onOpenChange, onTaskUpdated }: T
                           })}
                           placeholder="Enter tags separated by commas..."
                         />
+                      </div>
+
+                      <div>
+                        <h4 className="text-xs uppercase text-gray-500 mb-1">Dependencies</h4>
+                        <Select
+                          value=""
+                          onValueChange={(taskId) => {
+                            if (taskId && taskId !== editedTask.id) {
+                              const currentDeps = editedTask.dependencies || ""
+                              const depIds = currentDeps.split(",").map(d => d.trim()).filter(Boolean)
+                              if (!depIds.includes(taskId)) {
+                                const newDeps = depIds.length > 0 ? `${currentDeps}, ${taskId}` : taskId
+                                setEditedTask({ ...editedTask, dependencies: newDeps })
+                              }
+                            }
+                          }}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a task to depend on..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {allTasks
+                              .filter(t => t.id !== editedTask.id && !t.archived)
+                              .map((task) => (
+                                <SelectItem key={task.id} value={task.id}>
+                                  {task.name || task.title} ({formatStatusLabel(task.status)})
+                                </SelectItem>
+                              ))}
+                          </SelectContent>
+                        </Select>
+                        
+                        {editedTask.dependencies && (
+                          <div className="mt-2 space-y-1">
+                            {editedTask.dependencies.split(",").map((depId) => {
+                              const depId_trimmed = depId.trim()
+                              if (!depId_trimmed) return null
+                              const depTask = allTasks.find((t) => t.id === depId_trimmed)
+                              return (
+                                <div
+                                  key={depId_trimmed}
+                                  className="flex items-center justify-between bg-gray-100 dark:bg-gray-800 p-2 rounded"
+                                >
+                                  <span className="text-sm">{depTask?.name || depTask?.title || depId_trimmed}</span>
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-auto p-1"
+                                    onClick={() => {
+                                      const newDeps = (editedTask.dependencies || "")
+                                        .split(",")
+                                        .map((d) => d.trim())
+                                        .filter((d) => d !== depId_trimmed)
+                                        .join(", ")
+                                      setEditedTask({ ...editedTask, dependencies: newDeps })
+                                    }}
+                                  >
+                                    ×
+                                  </Button>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ) : (
