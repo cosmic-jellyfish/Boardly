@@ -203,9 +203,9 @@ export function NewTaskDialog({ open, onOpenChange, initialStatus, initialDate, 
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="todo">To Do</SelectItem>
-                  <SelectItem value="in-progress">In Progress</SelectItem>
                   <SelectItem value="review">Review</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="up-next">Up Next</SelectItem>
+                  <SelectItem value="in-progress">In Progress</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -25,9 +25,9 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick,
   const formatStatusLabel = (status: string): string => {
     const statusMap: { [key: string]: string } = {
       'todo': 'To Do',
-      'in-progress': 'In Progress',
       'review': 'Review',
-      'completed': 'Completed'
+      'up-next': 'Up Next',
+      'in-progress': 'In Progress'
     }
     return statusMap[status] || status
   }
@@ -52,18 +52,18 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick,
     switch (status) {
       case 'todo':
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
-      case 'in-progress':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
       case 'review':
         return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
-      case 'completed':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+      case 'up-next':
+        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+      case 'in-progress':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
     }
   }
 
-  const isOverdue = task.end_date && new Date(task.end_date) < new Date() && task.status !== 'completed'
+  const isOverdue = task.end_date && new Date(task.end_date) < new Date()
 
   // Calculate timeline progress
   const getTimelineProgress = () => {
@@ -132,6 +132,11 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick,
               )}>
                 {task.priority}
               </Badge>
+              {task.committed && (
+                <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 text-sm px-2 py-1 group transition-colors duration-150 hover:bg-orange-200 dark:hover:bg-orange-800">
+                  Committed
+                </Badge>
+              )}
               {isOverdue && (
                 <Badge className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 text-sm px-2 py-1 group transition-colors duration-150 hover:bg-red-200 dark:hover:bg-red-800">
                   Overdue
@@ -154,8 +159,7 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick,
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
               <span>
-                {task.status === 'completed' ? 'Completed' :
-                 timelineData.isNotStarted ? 'Not started' : 
+                {timelineData.isNotStarted ? 'Not started' : 
                  timelineData.isOverdue ? 'Overdue' : 
                  `${Math.round(timelineData.progress)}% complete`}
               </span>
@@ -174,8 +178,7 @@ export function TaskCard({ task, showDetails = false, readOnly = false, onClick,
             <div className="flex items-center justify-between text-sm text-gray-400">
               <span>{timelineData.totalDays} days total</span>
               <span>
-                {task.status === 'completed' ? 'Task completed' :
-                 timelineData.isNotStarted ? 'Starts soon' :
+                {timelineData.isNotStarted ? 'Starts soon' :
                  timelineData.isOverdue ? `${Math.abs(timelineData.elapsedDays - timelineData.totalDays)} days overdue` :
                  `${timelineData.totalDays - timelineData.elapsedDays} days left`}
               </span>

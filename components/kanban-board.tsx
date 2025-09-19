@@ -35,9 +35,9 @@ import React from "react"
 
 const statuses = [
   { id: 'todo', label: 'To Do', color: 'text-slate-700 dark:text-slate-300', bgColor: 'bg-slate-50 dark:bg-slate-900/50' },
-  { id: 'in-progress', label: 'In Progress', color: 'text-blue-700 dark:text-blue-300', bgColor: 'bg-blue-50 dark:bg-blue-900/30' },
   { id: 'review', label: 'Review', color: 'text-purple-700 dark:text-purple-300', bgColor: 'bg-purple-50 dark:bg-purple-900/30' },
-  { id: 'completed', label: 'Completed', color: 'text-emerald-700 dark:text-emerald-300', bgColor: 'bg-emerald-50 dark:bg-emerald-900/30' }
+  { id: 'up-next', label: 'Up Next', color: 'text-orange-700 dark:text-orange-300', bgColor: 'bg-orange-50 dark:bg-orange-900/30' },
+  { id: 'in-progress', label: 'In Progress', color: 'text-blue-700 dark:text-blue-300', bgColor: 'bg-blue-50 dark:bg-blue-900/30' }
 ]
 
 // Sortable Task Card Component
@@ -109,12 +109,12 @@ const SortableColumn = React.memo(({
     switch (status) {
       case 'todo':
         return 'hover:text-slate-700 hover:bg-slate-100 dark:hover:text-slate-200 dark:hover:bg-slate-800/60'
-      case 'in-progress':
-        return 'hover:text-blue-700 hover:bg-blue-100 dark:hover:text-blue-300 dark:hover:bg-blue-900/40'
       case 'review':
         return 'hover:text-purple-700 hover:bg-purple-100 dark:hover:text-purple-300 dark:hover:bg-purple-900/40'
-      case 'completed':
-        return 'hover:text-emerald-700 hover:bg-emerald-100 dark:hover:text-emerald-300 dark:hover:bg-emerald-900/40'
+      case 'up-next':
+        return 'hover:text-orange-700 hover:bg-orange-100 dark:hover:text-orange-300 dark:hover:bg-orange-900/40'
+      case 'in-progress':
+        return 'hover:text-blue-700 hover:bg-blue-100 dark:hover:text-blue-300 dark:hover:bg-blue-900/40'
       default:
         return 'hover:text-gray-700 hover:bg-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-800/60'
     }
@@ -162,20 +162,18 @@ const SortableColumn = React.memo(({
             )}
           </div>
         </SortableContext>
-        {/* Sticky "Add Task" Button at bottom of each column - hidden the completed status */}
-        {status.id !== 'completed' && (
-          <div className="sticky bottom-0 pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 bg-inherit">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className={`w-full text-gray-500 dark:text-gray-400 transition-all duration-200 rounded-lg ${getAddTaskHoverColors(status.id)}`}
-              onClick={onAddTask}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Task
-            </Button>
-          </div>
-        )}
+        {/* Sticky "Add Task" Button at bottom of each column */}
+        <div className="sticky bottom-0 pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 bg-inherit">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className={`w-full text-gray-500 dark:text-gray-400 transition-all duration-200 rounded-lg ${getAddTaskHoverColors(status.id)}`}
+            onClick={onAddTask}
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Task
+          </Button>
+        </div>
       </div>
     </div>
   )
