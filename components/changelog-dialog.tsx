@@ -27,6 +27,22 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
   {
+    version: "1.3.0",
+    date: "2025-09-20", 
+    title: "Enhanced Task Management & Workflow",
+    description: "Major improvements to the task management workflow with better status organisation, commitment tracking, and visual indicators. Removed the completed column from kanban board in favor of a dedicated completed page.",
+    type: "feature",
+    highlights: [
+      "Removed 'Completed' column from kanban board for cleaner workflow",
+      "Updated status flow: To Do → Review → Up Next → In Progress",
+      "Added commitment tracking with visual indicators on task cards",
+      "Enhanced task details dialog with better status management",
+      "Improved status consistency across all components",
+      "Better visual hierarchy with enhanced card layouts and styling",
+      "Adjusted the changelog dialog to allow for scrolling when many versions are present"
+    ]
+  },
+  {
     version: "1.2.1",
     date: "2025-09-06", 
     title: "Dependencies Bug Fix and Improvement",
@@ -153,8 +169,8 @@ export function ChangelogDialog({ open, onOpenChange }: ChangelogDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden">
-        <DialogHeader className="pb-4">
+      <DialogContent className="max-w-4xl max-h-[80vh] flex flex-col">
+        <DialogHeader className="pb-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
@@ -171,7 +187,7 @@ export function ChangelogDialog({ open, onOpenChange }: ChangelogDialogProps) {
           </div>
         </DialogHeader>
 
-        <div className="flex gap-6 h-full overflow-hidden">
+        <div className="flex gap-6 flex-1 min-h-0 overflow-hidden">
           {/* Version List */}
           <div className="w-1/3 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
             <div className="space-y-2 pr-4">
