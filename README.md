@@ -18,38 +18,38 @@ A clean, intuitive task management app that helps you organise, track, and compl
 
 ## ✨ Features
 
-### 🎯 **Task Management**
+### **Task Management**
 - Create and organise tasks with an intuitive kanban board
 - Set priorities, due dates, and assignees
 - Rich text descriptions 
 - Task dependencies and hierarchical relationships
 
-### 📊 **Activity Overview**
+### **Activity Overview**
 - Real-time dashboard with upcoming tasks
 - High priority task tracking
 - Recent activity logs
 - Progress visualisation
 
-### 📋 **Kanban Board**
+### **Kanban Board**
 - Visual progress tracking
 - Quick status updates
 - Easy to view and navigate
 - Add tasks easily
 - Drag & Drop features
 
-### 🎨 **Modern Interface**
+### **Modern Interface**
 - Clean, responsive design
 - Smooth animations and transitions
 
 _dark mode coming soon_
 
-### 🔒 **Privacy First**
+### **Privacy First**
 - No accounts or sign-ups required
 - All data stays on your device
 - No cloud storage or tracking
 - Complete control over your information
 
-### 📤 **Data Import/Export**
+### **Data Import/Export**
 - Export your tasks and data to JSON files
 - Import data from other devices or backups
 - Share task lists with whoever
@@ -60,14 +60,14 @@ _You can see how data importing works by downloading the example file_\
 
 
 
-## 🚀 Getting Started
+## Getting Started
 
 You've got two options to get Boardly up and running:
 
 ### Option 1: Use the Hosted Version (Recommended)
 The easiest way to get started - just visit the live demo and start organising your tasks straight away!
 
-**[🚀 Boardly Hosted](https://boardly-inky.vercel.app/)**
+**[Boardly Hosted](https://boardly-inky.vercel.app/)**
 
 Your data stays local to your browser, so you get all the privacy benefits without any setup hassle.
 
@@ -132,7 +132,7 @@ Click on any task to view and edit detailed information, including descriptions,
 
 ![Task Details](photos/details.png)
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: Next.js 
 - **Language**: TypeScript
@@ -153,7 +153,7 @@ Contributions are welcome! Here's how you can help:
 
 _I appreciate any and all help of course!_
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
